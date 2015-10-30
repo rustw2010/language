@@ -1,16 +1,18 @@
-	<!doctype html>
-	{% load staticfiles %} 
-	<html>
-	<head>
-	<link rel=stylesheet href={% static 'main/css/main.css' %}>
-	<title>程式語言小百科</title>
-	<meta charset=utf-8>
-	</head>
-	<body>
-	<h1>Django 說--Hello world!</h1>
-	<p>{{message}}</p>
-	<p>現在時間：{{today}}</p>
-	<p><a href={% url 'wiki:wiki' %}>前往 Wiki 頁面</a></p>
-	<p><a href={% url 'wiki:about' %}>關於城市語言小百科</a></p>
-	</body>
-	</html>
+<!doctype html>
+{% load staticfiles %} 
+<html>
+<head>
+<link rel=stylesheet href={% static 'main/css/main.css' %}>
+<title>程式語言小百科</title>
+<meta charset=utf-8>
+</head>
+<body>
+<h1>Django 說--Hello world!</h1>
+<p>{{message}}</p>
+<p>現在時間：{{today}}</p>
+<p><a href={% url 'init:init' %}>前往init頁面</a></p>
+<p><a href={% url 'wiki:wiki' %}>前往 Wiki 頁面</a></p>
+<p><a href={% url 'wiki:about' %}>關於城市語言小百科</a></p>
+
+</body>
+</html>
