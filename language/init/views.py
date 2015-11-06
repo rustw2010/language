@@ -1,8 +1,26 @@
 from django.shortcuts import render
 from wiki.models import Category, Page
+from django.contrib.auth.models import User
 
 
 def init(request):
+    if User.objects.filter(username='admin'):
+        context = {'init':False}
+    else:
+        context = {'init':True}
+ # Delete everything
+    User.objects.all().delete()
+    Category.objects.all().delete()
+    Page.objects.all().delete()
+ # Create the 'admin' account
+    admin = User()
+    admin.username = 'admin'
+    admin.first_name = '管理員'
+    admin.set_password('admin')
+    admin.email = 'admin@gmail.com'
+    admin.is_staff = True
+    admin.is_superuser = True
+    admin.save()
     # Python
     pythonCategory = popCategory('Python')
     popPage(category=pythonCategory,
@@ -42,13 +60,14 @@ def init(request):
             title='Flask 框架',
             url='http://flask.pocoo.org')
     # Retrieve everything
+    users = User.objects.all()
     categories = Category.objects.all()
     pages = Page.objects.all()
-    context = {'categories':categories, 'pages':pages}
-
+    context.update({'users':users, 'categories':categories, 'pages':pages})
     return render(request, 'init/init.html', context)
+import random
 def popCategory(name):
-    category = Category.objects.get_or_create(name=name)[0]
+    category = Category.objects.get_or_create(name=name,views=random.randint(0,20),likes=random.randint(0,20))[0]
     return category
 def popPage(category, title, url, views=0):
     Page.objects.get_or_create(category=category, title=title,
